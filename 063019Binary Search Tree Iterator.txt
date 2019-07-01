@@ -52,24 +52,43 @@ Super Star: Extra memory usage O(1)
  */
 
 
-public class BSTIterator {
-    /*
-    * @param root: The root of binary tree.
-    */public BSTIterator(TreeNode root) {
+class BSTIterator {
+    private Stack<TreeNode> stack = new Stack<>();
+    public BSTIterator(TreeNode root) {
+        TreeNode cur = root;
+        while(cur != null){
+            stack.push(cur);
+            cur = cur.left;
+        }
+        
     }
-
-    /*
-     * @return: True if there has next node, or false
-     */
+    
+    /** @return the next smallest number */
+    public int next() {
+        TreeNode node = stack.pop();
+        TreeNode cur = node;
+        int res = node.val;
+            if(cur.right != null){
+                cur = cur.right;
+                while(cur != null){
+                    stack.push(cur);
+                    if(cur.left != null){
+                        cur = cur.left;    
+                    }else
+                        break;
+                }
+            }
+        return res;
+    }
+    
+    /** @return whether we have a next smallest number */
     public boolean hasNext() {
+        if(stack.isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
     }
-    
-    /*
-     * @return: return next node
-     */
-    public TreeNode next() {
-    }
-    
 }
 
 
