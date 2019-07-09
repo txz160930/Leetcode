@@ -37,14 +37,54 @@ public class Solution {
     }
 }
 
-
+//Joel's Code 老老实实按照题目写
 public class Solution {
     /**
      * @param board: a board
      * @param click: the position
      * @return: the new board
      */
+	 
+	public int[] X = new int[]{1, -1, 0, 0, 1, 1, -1, -1};
+	public int[] Y = new int[]{0, 0, 1, -1, 1, -1, 1, -1};
     public char[][] updateBoard(char[][] board, int[] click) {
-        // Write your code here
+        dfs(board, click[0], click[1]);
+		return board;
     }
+	
+	private void dfs(char[][] board, int x, int y) {
+	    if (board[x][y] == 'M') {
+		    board[x][y] = 'X';
+			return;
+		}
+		
+		if (board[x][y] == 'E') {
+		    int count = countMines(board, x, y);
+			if (count != 0) {
+			   board[x][y] = (char) (count + '0');
+			} else {
+			   board[x][y] = 'B';
+			   for (int i = 0; i < 8; i++) {
+			      	int tempX = x + X[i];
+		            int tempY = y + Y[i];
+					if (tempX >= 0 && tempY >= 0 && tempX < board.length && tempY < board[0].length && board[tempX][tempY] == 'E') {
+		                dfs(board, tempX, tempY);
+		            }
+			   }
+			
+			}
+		}
+	}
+	
+	private int countMines(char[][] board, int x, int y) {
+	    int count = 0;
+	    for (int i = 0; i < 8; i++) {
+		   int tempX = x + X[i];
+		   int tempY = y + Y[i];
+		   if (tempX >= 0 && tempY >= 0 && tempX < board.length && tempY < board[0].length && board[tempX][tempY] == 'M') {
+		      count++;
+		   }
+		}
+		return count;
+	}
 }
