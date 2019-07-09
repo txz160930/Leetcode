@@ -25,7 +25,7 @@ Notice
 3.The input board won't be a stage when game is over (some mines have been revealed).
 4.For simplicity, not mentioned rules should be ignored in this problem. For example, you don't need to reveal all the unrevealed mines when the game is over, consider any cases that you will win the game or flag any squares.
 
-
+// Daniel's code
 public class Solution {
     /**
      * @param board: a board
@@ -33,7 +33,48 @@ public class Solution {
      * @return: the new board
      */
     public char[][] updateBoard(char[][] board, int[] click) {
-        // Write your code here
+        int x = click[0];
+        int y = click[1];
+        
+        if(board[x][y] == 'M')
+            board[x][y] = 'X';
+        else
+            dfs(board,x,y);
+        
+        return board;
+    }
+    
+    public void dfs(char[][] board, int i, int j){
+        if(i < 0 || j < 0 || i > board.length-1 || j > board[i].length-1 || board[i][j] != 'E')
+            return;
+        board[i][j] = adjacentMines(board,i,j);
+        if(board[i][j] != 'B')
+            return;
+        dfs(board,i+1,j);
+        dfs(board,i-1,j);
+        dfs(board,i,j+1);
+        dfs(board,i,j-1);
+        
+        dfs(board,i+1,j+1);
+        dfs(board,i+1,j-1);
+        dfs(board,i-1,j+1);
+        dfs(board,i-1,j-1);
+        
+    }
+		
+    //count how many mines in the 3x3 grid arround coordinate
+    public char adjacentMines(char[][] board, int i, int j){
+       int count = 0; 
+	//這裡 -1 +2 是為了 3x3 方格
+       for(int r = i-1; r < i+2; r++){
+           for(int c = j-1; c < j+2; c++){
+               if(!(r < 0 || c < 0 || r > board.length-1 || c > board[r].length-1 ) && board[r][c] == 'M') 
+                   count++;        
+                
+           }
+        }
+       
+        return count == 0 ? 'B' : (char)('0'+count);
     }
 }
 
