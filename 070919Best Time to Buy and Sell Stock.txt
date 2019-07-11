@@ -38,6 +38,19 @@ public class Solution {
      * @return: Maximum profit
      */
     public int maxProfit(int[] prices) {
-        // write your code here
+	
+        int lowPoint = Integer.MAX_VALUE;
+		int result = 0;
+		
+		for (int i = 0; i < prices.length; i++) {
+		    if (lowPoint > prices[i]) {
+			   lowPoint = prices[i];
+			}
+			if (prices[i] - lowPoint > result) {
+			   result = prices[i] - lowPoint;
+			}
+		}
+		
+		return result;
     }
 }
