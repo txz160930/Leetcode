@@ -70,18 +70,14 @@ public class Solution {
 		int length3 = length1 + length2;
 		
 		int[] num3 = new int[length3];
-		int carryOn = 0;
 		int j = 0;
 		
 		for (int i =  length1 - 1; i >= 0; i--) {
-		    carryOn = 0;
 		    for (j = length2 - 1; j >= 0; j--) {
-			    int temp = Character.getNumericValue(num1.charAt(i)) * Character.getNumericValue(num2.charAt(j));
-				int product = carryOn + num3[i + j + 1] + temp;
+				int product = num3[i + j + 1] + Character.getNumericValue(num1.charAt(i)) * Character.getNumericValue(num2.charAt(j));
 				num3[i + j + 1] = product % 10;
-				carryOn = product / 10;
+				num3[i + j] += product / 10;
 			}
-			num3[i + j + 1] = carryOn;
 		}
 		
 		StringBuilder sb = new StringBuilder();
