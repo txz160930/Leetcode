@@ -36,13 +36,36 @@ public class Solution {
     }
 }
 
-
+//Joel's Code
 public class Solution {
     /**
      * @param path: the original path
      * @return: the simplified path
      */
     public String simplifyPath(String path) {
-        // write your code here
+        String[] stubs = path.split("/+");
+        Stack<String> stack = new Stack<>();
+        
+        //分三种情况讨论，并且加入stack之中去
+        for (String s : stubs) {
+            if (s.equals("..")) {
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                }
+            } else if (s.equals(".") || s.equals("")) {
+                continue;
+            } else {
+                stack.push(s);
+            }
+        }
+
+        //反加入string中
+        String result = "";
+        while (!stack.isEmpty()) {
+            String temp = "/" + stack.pop();
+            result = temp + result;
+        }
+
+        return result == "" ? "/" : result;
     }
 }
