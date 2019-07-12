@@ -21,6 +21,7 @@ Input: [5, 4, 3, 2, 1]
 Output: 0
 Explanation: You can do nothing and get nothing.
 
+//Daniel's code
 public class Solution {
     /**
      * @param prices: Given an integer array
@@ -28,6 +29,19 @@ public class Solution {
      */
     public int maxProfit(int[] prices) {
         // write your code here
+	if (prices.length == 0) {
+			 return 0 ;
+		 }
+        int max  = 0;
+        int startmin = prices[0];
+        for(int i = 0; i < prices.length; i++){
+            if(prices[i] > startmin){
+                max = Math.max(max, prices[i] - startmin);
+            }else{
+                startmin = prices[i];
+            }
+        }
+        return max;
     }
 }
 
