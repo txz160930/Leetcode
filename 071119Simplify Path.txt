@@ -25,7 +25,7 @@ Another corner case is the path might contain multiple slashes '/' together, suc
 
 In this case, you should ignore redundant slashes and return "/home/foo".
 
-
+//Daniel's code
 public class Solution {
     /**
      * @param path: the original path
@@ -33,6 +33,25 @@ public class Solution {
      */
     public String simplifyPath(String path) {
         // write your code here
+        String[] stubs = path.split("/+");
+        Stack<String> stack = new Stack<>();
+        for(String s : stubs){
+            if(s.equals(".")){
+                continue;
+            }else if(s.equals("")) {
+            	continue;
+            }else if(s.equals("..")){
+                if(!stack.isEmpty())
+                    stack.pop();
+            }else{
+                stack.push(s);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!stack.isEmpty()){
+            sb.insert(0,"/" + stack.pop());
+        }
+        return sb.length() == 0 ? "/" : sb.toString();
     }
 }
 
