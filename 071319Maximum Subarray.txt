@@ -19,6 +19,8 @@ Can you do it in time complexity O(n)?
 Notice
 The subarray should contain at least one number.
 
+//Daniel'code
+//一個指針的小概念
 public class Solution {
     /**
      * @param nums: A list of integers
@@ -26,6 +28,13 @@ public class Solution {
      */
     public int maxSubArray(int[] nums) {
         // write your code here
+        int sum = 0;
+        int max = nums[0];
+        for(int num : nums){
+            sum = Math.max(num, sum + num);
+            max = Math.max (sum, max);
+        }
+        return max;
     }
 }
 
