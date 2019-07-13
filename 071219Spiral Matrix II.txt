@@ -42,6 +42,67 @@ public class Solution {
      * @return: a square matrix
      */
     public int[][] generateMatrix(int n) {
-        // write your code here
+        int[][] result = new int[n][n];
+        int xStart = 0;
+        int yStart = 0;
+        
+        int sumCount = n * n;
+        int num = 1;
+        int direction = 0;
+        int count = 0;
+        
+        
+        //硬写，for 循环控制整体数量
+        for (int i = 0; i < sumCount; i++) {
+            //四种情况开始绕
+            if (direction == 0) {
+                result[xStart][yStart] = num;
+                //需要变向的边境情况
+                if (!inBound(xStart, yStart + 1, result)) {
+                    direction = (direction + 1) % 4;
+                    xStart++;
+                } else {
+                    yStart++;
+                }
+            }
+            else if (direction == 1) {
+                result[xStart][yStart] = num;
+                if (!inBound(xStart + 1, yStart, result)) {
+                    direction = (direction + 1) % 4;
+                    yStart--;
+                } else {
+                    xStart++;
+                }
+            }
+            else if (direction == 2) {
+                result[xStart][yStart] = num;
+                if (!inBound(xStart, yStart - 1, result)) {
+                    direction = (direction + 1) % 4;
+                    xStart--;
+                } else {
+                    yStart--;
+                }
+            }
+            else if (direction == 3) {
+                result[xStart][yStart] = num;
+                if (!inBound(xStart - 1, yStart, result)) {
+                    direction = (direction + 1) % 4;
+                    yStart++;
+                } else {
+                    xStart--;
+                }
+            }
+            num++;
+        }
+        
+        return result;
+    }
+    
+    private boolean inBound(int x, int y, int[][] result) {
+        if (x < 0 || y < 0 || x >= result.length || y >= result.length || result[x][y] != 0)
+        {
+            return false;
+        }
+        return true;
     }
 }
