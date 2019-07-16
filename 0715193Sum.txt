@@ -34,6 +34,45 @@ public class Solution {
      * @return: Find all unique triplets in the array which gives the sum of zero.
      */
     public List<List<Integer>> threeSum(int[] numbers) {
-        // write your code here
+        List<List<Integer>> result = new ArrayList<>();
+		if (numbers == null || numbers.length < 3) {
+		   return result;
+		}
+		
+		Arrays.sort(numbers);
+		
+		for (int i = 0; i < numbers.length; i++) {
+		   int target = -numbers[i];
+		   int left = i + 1;
+		   int right = numbers.length - 1;
+		   helper(result, left, right, target, numbers);
+		}
+		
+		return result;
     }
+	
+	private void helper(List<List<Integer>> result, int left, int right, int target, int[] numbers) {
+	    if (left >= right) {
+		    return;
+		}
+		while (left < right) {
+			if (target == numbers[left] + numbers[right]) {
+				List<Integer> single = new ArrayList<>();
+				single.add(-target);
+				single.add(numbers[left]);
+				single.add(numbers[right]);
+				if (!result.contains(single)) {
+				   result.add(single);
+				}
+				left++;
+				right--;
+			}
+			else if (target > numbers[left] + numbers[right]) {
+				left++;
+			}
+			else if (target < numbers[left] + numbers[right]) {
+				right--;
+			}
+		}
+	}
 }
