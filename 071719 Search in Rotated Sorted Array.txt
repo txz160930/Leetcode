@@ -27,8 +27,51 @@ class Solution {
 }
 
 // Joe's code
-class Solution {
-    public int search(int[] nums, int target) {
-        
+
+// 做过直接贴答案，分成两种大情况的3种小情况，一共六种情况
+public class Solution {
+    /**
+     * @param A: an integer rotated sorted array
+     * @param target: an integer to be searched
+     * @return: an integer
+     */
+    public int search(int[] A, int target) {
+	    if (A == null || A.length == 0) {
+		   return -1;
+		}
+            int start = 0;
+            int end = A.length - 1;
+	     while (start + 1 < end) {
+		    int mid = start + (end - start) / 2;
+                        //target on the left
+			if (target > A[A.length - 1]) {
+			   if (A[mid] <= A[A.length - 1]) {
+			      end = mid;
+			   } else if (A[mid] >= target) {
+			      end = mid;
+			   } else if (A[mid] < target && A[mid] > A[A.length - 1]) {
+			      start = mid;
+			   }
+			} 
+                        //target on the right
+                        else {
+			   if (A[mid] > target && A[mid] <= A[A.length - 1]) {
+			      end = mid;
+			   } else if (A[mid] <= target) {
+			      start = mid;
+			   } else if (A[mid] > A[A.length - 1]) {
+			      start = mid;
+			   }
+			}
+		}
+		
+		if (A[start] == target) {
+		   return start;
+		}
+		if (A[end] == target) {
+		   return end;
+		}
+		
+		return -1;
     }
 }
