@@ -24,6 +24,33 @@ public class Solution {
      */
     public List<List<Integer>> threeSum(int[] numbers) {
         // write your code here
+	Arrays.sort(nums);
+		List<List<Integer>> res = new LinkedList<>(); 
+		for(int i = 0; i < nums.length-2; i++){
+			if(i == 0 || (i > 0 && nums[i] != nums[i-1])){
+				int lo = i + 1, hi = nums.length-1;
+				int sum = 0 - nums[i];
+				while(lo < hi){
+					if(nums[lo] + nums[hi] == sum){
+                        List<Integer> list = new LinkedList<>();
+                        list.add(nums[lo]);
+                        list.add(nums[i]);
+                        list.add(nums[hi]);
+                        res.add(list);
+						while (lo < hi && nums[lo] == nums[lo+1]) lo++;
+						while (lo < hi && nums[hi] == nums[hi-1]) hi--;
+						lo++;
+						hi--;
+					}
+					else if(nums[lo] + nums[hi] < sum){
+						lo++;
+					}else{
+						hi--;
+					}
+				}
+			}			
+		}
+		return res;
     }
 }
 
