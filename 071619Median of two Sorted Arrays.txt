@@ -31,6 +31,8 @@ If there are n numbers in the array and n is even, the median is (A[n / 2] + A[n
 
 For example, the median of the array A=[1,2,3] is 2, and the median of the array A=[1,19] is 10.
 
+//Daniel's code
+//完全不會
 public class Solution {
     /*
      * @param A: An integer array
