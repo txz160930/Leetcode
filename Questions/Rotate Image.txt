@@ -1,0 +1,53 @@
+161. Rotate Image
+??English
+You are given an n x n 2D matrix representing an image.
+Rotate the image by 90 degrees (clockwise).
+
+Example
+Example 1:
+
+Input:[[1,2],[3,4]]
+Output:[[3,1],[4,2]]
+Example 2:
+
+Input:[[1,2,3],[4,5,6],[7,8,9]]
+Output:[[7,4,1],[8,5,2],[9,6,3]]
+Challenge
+Do it in-place.
+
+Input
+Show Difference
+[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+Output
+[[13,9,14,1],[10,6,7,2],[15,11,5,3],[16,12,8,4]]
+Expected
+[[13,9,5,1],[14,10,6,2],[15,11,7,3],[16,12,8,4]]
+
+
+public class Solution {
+    /**
+     * @param matrix: a lists of integers
+     * @return: nothing
+     */
+    public void rotate(int[][] matrix) {
+		int length = matrix.length - 1;
+		int startRow = 0;
+		int startCol = 0;
+		int endRow = matrix.length - 1;
+		int endCol = matrix.length - 1;
+		while (length > 0) {
+		    for (int i = 0; i < length; i++) {
+			    int temp = matrix[startRow + i][endCol];
+			    matrix[startRow + i][endCol] = matrix[startRow][startCol + i];
+				matrix[startRow][startCol + i] = matrix[endRow - i][startCol];
+				matrix[endRow - i][startCol] = matrix[endRow][endCol - i];
+				matrix[endRow][endCol - i] = temp;
+			}
+			startRow++;
+			startCol++;
+			endCol--;
+			endRow--;
+			length = length - 2;
+		}
+    }
+}

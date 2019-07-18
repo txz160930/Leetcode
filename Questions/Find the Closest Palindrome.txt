@@ -1,0 +1,56 @@
+1171. Find the Closest Palindrome
+??English
+Given an integer n, find the closest integer (not including itself), which is a palindrome.
+
+The 'closest' is defined as absolute difference minimized between two integers.
+
+Example
+Example 1:
+
+Input: "123"
+Output: "121"
+Explanation:"121" is the closest "123" palindrome string
+Example 2:
+
+Input: "1"
+Output: "0"
+Explanation:"0" is the closest "1" palindrome string
+Notice
+1.The input n is a positive integer represented by string, whose length will not exceed 18.
+2.If there is a tie, return the smaller one as answer.
+
+
+public class Solution {
+    /**
+     * @param n: a positive integer represented by string
+     * @return:  the closest integer which is a palindrome
+     */
+    public String nearestPalindromic(String n) {
+        int length = n.length();
+		Set<Long> set = new HashSet<Long>();
+		set.add(long(Math.pow(10, length) + 1);
+		set.add(long(Math.pow(10, length - 1) + 1);
+		
+		long prefix = Long.parseLong(n.substring(0, (length + 1) / 2);
+		for (long i = -1; i <= 1; i++) {
+		    string p = String.valueOf(prefix + i);
+			string pp = p;
+			for (int i = length / 2; i >= 0; i--) {
+			   pp = pp + p.charAt(i);
+			}
+			set.add(Long.parseLong(pp));
+			long number = long.parseLong(n);
+			int minDiff = Long.MAX_LONG;
+			int diff = 0;
+			int minVal = 0;
+			for (long val : set) {
+			    diff = Math.abs(number - val);
+				if (diff < minDiff) {
+				   minDiff = diff;
+				   minVal = val;
+				}
+			}
+			return String.valueOf(minVal);
+		}
+    }
+}

@@ -1,0 +1,58 @@
+
+
+public class Solution {
+    /**
+     * @param A: an integer array
+     * @return: nothing
+     */
+    public void sortIntegers(int[] A) {
+		int start = 0;
+		int end = A.length - 1;
+		int[] result = new int[A.length];
+		mergeSort(A, result, start, end);
+    }
+	
+	public void mergeSort(int[] A, int[] result, int start, int end) {
+		if (start >= end) {
+			return;
+		}
+	
+		int mid = (end - start) / 2 + start;
+		mergeSort(A, result, start, mid);
+		mergeSort(A, result, mid + 1, end);
+		merge(A, result, start, mid, mid + 1, end);
+	}
+	
+	public void merge (int[] A, int[] result, int index1, int mid, int index2, int end) {
+		int start = index1;
+		int start1 = index1;
+		while (index1 <= mid && index2 <= end) {
+		   if (A[index1] > A[index2]) {
+			   result[start] = A[index2];
+			   index2++;
+			   start++;
+		   } else {
+			   result[start] = A[index1];
+			   start++;
+			   index1++;
+		   }
+		}
+		
+		while (index1 <= mid) {
+			result[start] = A[index1];
+			start++;
+			index1++;
+		}
+		
+			
+		while (index2 <= end) {
+			result[start] = A[index2];
+			start++;
+			index2++;
+		}
+		
+		for (int i = start1; i <= end; i++) {
+		    A[i] = result[i];
+		}
+	}
+}
