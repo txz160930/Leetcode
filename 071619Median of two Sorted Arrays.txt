@@ -67,7 +67,7 @@ public class Solution {
     }
 }
 
-
+//需要继续研究
 public class Solution {
     /*
      * @param A: An integer array
@@ -75,6 +75,51 @@ public class Solution {
      * @return: a double whose format is *.5 or *.0
      */
     public double findMedianSortedArrays(int[] A, int[] B) {
-        // write your code here
+        int n = A.length + B.length;
+        
+        //假设是偶数
+        if (n % 2 == 0) {
+            return (findKth(A, 0, B, 0, n / 2) + 
+                    findKth(A, 0, B, 0, n / 2 + 1)) / 2.0;
+        }
+        
+        //假设是奇数，搞递归
+        return findKth(A, 0, B, 0, n / 2 + 1);
+    }
+    
+    private int findKth(int[] A, int indexA, int[] B, int indexB, int k) {
+        //超过就return其他的
+        if (indexA >= A.length) {
+            return B[indexB + k - 1];
+        }
+        if (indexB >= B.length) {
+            return A[indexA + k - 1];
+        }
+        
+        //如果只剩1了，最小的
+        if (k == 1) {
+            return Math.min(A[indexA], B[indexB]);
+        }
+        
+        int halfKthOfA = 0;
+        int halfKthOfB = 0;
+        if (indexA + k / 2 - 1 < A.length) {
+            halfKthOfA = A[indexA + k / 2 - 1];
+        } else {
+            halfKthOfA = Integer.MAX_VALUE;
+        }
+        
+        if (indexA + k / 2 - 1 < B.length) {
+            halfKthOfB = B[indexB + k / 2 - 1];
+        } else {
+            halfKthOfB = Integer.MAX_VALUE;
+        }
+        
+        //进行比较中间的数
+        if (halfKthOfA < halfKthOfB) {
+            return findKth(A, indexA + k / 2, B, indexB, k - k / 2);
+        } else {
+            return findKth(A, indexA, B, indexB + k / 2, k - k / 2);
+        }
     }
 }
