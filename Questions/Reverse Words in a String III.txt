@@ -1,0 +1,59 @@
+Given a string, you need to reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+
+Example 1:
+Input: "Let's take LeetCode contest"
+        tsetnoc edoCteeL ekat s'teL 
+Output: "s'teL ekat edoCteeL tsetnoc"
+Note: In the string, each word is separated by single space and there will not be any extra space in the string.
+
+Accepted
+125,191
+Submissions
+195,458
+
+StringBuilder sb character+  O(1)
+String sb character+ O(n)
+
+
+public class Solution {
+    /**
+     * @param s: a string
+     * @return: reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order
+     */
+    public String reverseWords(String s) {
+        if (s == null || s.length() == 0) {
+		    return s;
+		}
+		
+		int index = 0;
+		String[] input = s.split(" ");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < input.length; i++) {
+		    swap(sb, input[i], input[i].length() - 1);
+		}
+		
+		return sb.toString().substring(0, sb.toString().length() - 1);
+    }
+    
+    private void swap(StringBuilder sb, String word, int end) {
+	    while (end >= 0) {
+		    sb.append(word.charAt(end));
+			end--;
+		}
+		sb.append(" ");
+	}
+}
+
+
+var reverseWords = function(s) {
+    let revesStr = "";
+    let result = []
+    for(let i = s.length - 1; i>=0; i--){
+        revesStr += s[i];
+    }
+    let arr = revesStr.split(" ");
+    for(let i = arr.length - 1; i >= 0; i--){
+        result.push(arr[i])
+    }
+    return result.join(" ")
+};

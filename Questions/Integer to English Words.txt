@@ -1,0 +1,60 @@
+1305. Integer to English Words
+??English
+Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 2^31 - 1.
+
+Example
+123 -> "One Hundred Twenty Three"
+12345 -> "Twelve Thousand Three Hundred Forty Five"
+1234567 -> "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+
+public class Solution {
+    /**
+     * @param num: a non-negative integer
+     * @return: english words representation
+     */
+	String[] In_TWENTY = new String[] {
+	"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+	"Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"
+	};
+	
+	String[] In_HUNDRED = new String[] {
+	"", "Ten ", "Twenty ", "Thirty ", "Forty ", "Fifty ", "Sixty ", "Seventy ", "Eighty ", "Ninety "
+	};
+	
+	String[] Over_Thousand = new String[] {
+	"", "Thousand", "Million", "Billion"
+	};
+		
+	public String helper(int temp) {
+	    String s = "";
+	    if (temp < 20) {
+		   s = In_TWENTY[temp];
+	    } else if (temp < 100) {
+		   s = In_HUNDRED[temp / 10] + In_TWENTY[temp % 10];
+	    } else {
+		   s = In_TWENTY[temp / 100] + " Hundred " + In_HUNDRED[(temp % 100) / 10] + In_TWENTY[(temp % 100) % 10];
+	    }
+	    return s.trim();
+	}
+	
+    public String numberToWords(int num) { 
+		if (num == 0) {
+		   return "Zero";
+		}
+		String result = "";
+		int i = 0;
+		while (num > 0) {
+		   int temp = num % 1000;
+		   String s = helper(temp);
+		   
+		   if (!s.equals("")) {
+		      result = s + " " + Over_Thousand[i] + " " + result; 
+		   }
+		   
+		   result.trim();
+		   num = num / 1000;
+		   i++;
+		}
+		return result.trim();
+    }
+}
