@@ -50,12 +50,59 @@ public class Solution {
 }
 
 //Joel's Code
+//分别对其做DFS并且匹配之
 public class Solution {
     /**
      * @param matrix: the given matrix
      * @return: The list of grid coordinates
      */
+	int[] dx = {0, -1, 0, 1};
+	int[] dy = {1, 0 , -1, 0};
     public List<List<Integer>> pacificAtlantic(int[][] matrix) {
-        // write your code here
+        List<List<Integer>> result = new ArrayList<>();
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+		    return result;
+		}
+		
+		int n = matrix.length;
+		int m = matrix[0].length;
+		boolean[][] Pacific = new boolean[n][m];
+		boolean[][] Atlantic = new boolean[n][m];
+		
+		for (int i = 0; i < n; i++) {
+		   dfs(matrix, Pacific, Integer.MIN_VALUE, i, 0);
+		   dfs(matrix, Atlantic, Integer.MIN_VALUE, i, m - 1);
+		}
+		
+		for (int i = 0; i < m; i++) {
+		   dfs(matrix, Pacific, Integer.MIN_VALUE, 0, i);
+		   dfs(matrix, Atlantic, Integer.MIN_VALUE, n - 1, i);
+		}
+		
+		for (int i = 0; i < n; i++) {
+		   for (int j = 0; j < m; j++) {
+		      if (Pacific[i][j] == Atlantic[i][j] && Pacific[i][j] == true) {
+			     List<Integer> temp = new ArrayList<>();
+				 temp.add(i);
+				 temp.add(j);
+			     result.add(temp);
+			  }
+		   }
+		}
+		
+		return result;
     }
+	
+	private void dfs(int[][] matrix, boolean[][] visited, int height, int x, int y) {
+	    int n = matrix.length;
+		int m = matrix[0].length;
+		if (x < 0 || x >= n || y < 0 || y >= m || height > matrix[x][y] || visited[x][y] == true) {
+		   return;
+		}
+		visited[x][y] = true;
+		
+		for (int i = 0; i < 4; i++) {
+		   dfs(matrix, visited, matrix[x][y], x + dx[i], y + dy[i]);
+		}
+	}
 }
