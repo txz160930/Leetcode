@@ -27,12 +27,42 @@ public class Solution {
 
 
 //Joel
+
+//只能n平方做了
 public class Solution {
     /**
      * @param s: input string
      * @return: the longest palindromic substring
      */
     public String longestPalindrome(String s) {
-        // write your code here
+        if (s == null || s.length() == 0) {
+		   return s;
+		}
+		
+		String result = "";
+		for (int i = 0; i < s.length(); i++) {
+		    result = helper(s, result, i, i);
+		}
+		for (int i = 0; i < s.length() - 1; i++) {
+		    result = helper(s, result, i, i + 1);
+		}
+		
+		return result;
     }
+	
+	private String helper(String s, String result, int start, int end) {
+	    while (start >= 0 && end < s.length()) {
+		   if (s.charAt(start) == s.charAt(end)) {
+		      String temp = s.substring(start, end + 1);
+			  if (temp.length() > result.length()) {
+		          result = temp;
+		      }
+			  start--;
+		      end++;
+		   } else {
+		     break;
+		   }
+		}
+		return result;
+	}
 }
