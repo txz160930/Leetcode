@@ -1,0 +1,62 @@
+213. String Compression
+??English
+Implement a method to perform basic string compression using the counts of repeated characters. For example, the string aabcccccaaa would become a2b1c5a3.
+
+If the "compressed" string would not become smaller than the original string, your method should return the original string.
+
+You can assume the string has only upper and lower case letters (a-z).
+
+Example
+Example 1:
+
+Input: str = "aabcccccaaa"
+Output: "a2b1c5a3"
+Example 2:
+
+Input: str = "aabbcc"
+Output: "aabbcc"
+
+//Daniel's
+public class Solution {
+    /**
+     * @param originalString: a string
+     * @return: a compressed string
+     */
+    public String compress(String originalString) {
+        // write your code here
+    }
+}
+
+//Joel's Code
+public class Solution {
+    /**
+     * @param originalString: a string
+     * @return: a compressed string
+     */
+    public String compress(String originalString) {
+        if (originalString == null || originalString.length() == 0) {
+		   return originalString;
+		}
+		
+		//这题直接用两根指针进行操作
+		
+		char[] originalCharacters = originalString.toCharArray();
+		StringBuilder sb = new StringBuilder();
+		
+		int i = 0;
+		int temp = originalCharacters[0];
+		sb.append(originalCharacters[0]);
+		for (int j = 0; j < originalCharacters.length; j++) {
+		   	if (j == originalCharacters.length - 1) {
+			   sb.append(j - i + 1);
+		    }
+		   if (originalCharacters[i] != originalCharacters[j]) {
+		       sb.append(j - i);
+			   sb.append(originalCharacters[j]);
+			   i = j;
+		   }
+		}
+		
+		return sb.toString().length() < originalString.length() ? sb.toString() : originalString;
+    }
+}
