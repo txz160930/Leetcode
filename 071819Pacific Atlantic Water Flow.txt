@@ -47,7 +47,8 @@ public class Solution {
     public int n;
     public int m;
     public List<List<Integer>> pacificAtlantic(int[][] matrix) {
-        // write your code hereList<List<Integer>> res = new ArrayList<>();
+        // write your code here
+	List<List<Integer>> res = new ArrayList<>();
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0){
             return res;
         }
