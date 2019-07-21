@@ -44,8 +44,48 @@ public class Solution {
      * @param matrix: the given matrix
      * @return: The list of grid coordinates
      */
+    public int n;
+    public int m;
     public List<List<Integer>> pacificAtlantic(int[][] matrix) {
         // write your code here
+	List<List<Integer>> res = new ArrayList<>();
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return res;
+        }
+        m = matrix.length;
+        n = matrix[0].length;
+        boolean[][] pacific = new boolean[m][n];
+        boolean[][] atlantic = new boolean[m][n];
+        for (int i = 0; i < m; i++){
+            helper(matrix, pacific, 0, i, 0);
+            helper(matrix, atlantic, 0, i, n - 1);
+        }
+        for (int i = 0; i < n; i++){
+            helper(matrix, pacific, 0, 0, i);
+            helper(matrix, atlantic, 0, m - 1, i);
+        }
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                if (pacific[i][j] && atlantic[i][j]){
+                    List<Integer> list = new ArrayList<>();
+                    list.add(i);
+                    list.add(j);
+                    res.add(list);
+                }
+            }
+        }
+        return res;
+    }
+    
+    private void helper(int[][] matrix, boolean[][] visited, int pre, int i, int j){
+        if (i < 0 || i >= m || j < 0 || j >= n || visited[i][j] || matrix[i][j] < pre){
+            return;
+        }    
+        visited[i][j] = true;
+        helper(matrix, visited, matrix[i][j], i - 1, j);
+        helper(matrix, visited, matrix[i][j], i, j - 1);
+        helper(matrix, visited, matrix[i][j], i + 1, j);
+        helper(matrix, visited, matrix[i][j], i, j + 1);
     }
 }
 

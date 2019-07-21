@@ -24,6 +24,26 @@ public class Solution {
      */
     public String compress(String originalString) {
         // write your code here
+	char[] ch = originalString.toCharArray();
+		int count = 1; 
+	    int index = 0; 
+	    for (int i = 0; i < ch.length; i++) {
+	        while (i < ch.length - 1 && ch[i] == ch[i + 1]) {
+	            count++; 
+	            i++; 
+	        }
+	        if (count == 1) {
+	            ch[index++] = ch[i]; 
+	        } else {
+	            ch[index++] = ch[i]; 
+	            String num = String.valueOf(count); 
+	            for (int j = 0; j < num.length(); j++) {
+	                ch[index++] = num.charAt(j); 
+	            }
+	        }
+	        count = 1; 
+	    }
+	    return new String(ch);
     }
 }
 
