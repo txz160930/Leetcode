@@ -60,6 +60,25 @@ public class Solution extends Relation {
      * @return the celebrity's label or -1
      */
     public int findCelebrity(int n) {
-        // Write your code here
+        int result = 0;
+        
+        //根据排除法找到一个人，那个人有一个人认识他
+        for (int i = 1; i < n; i++) {
+            if (knows(result, i)) {
+                result = i;
+            }
+        }
+        
+        //对于这个人验证
+        for (int i = 0; i < n; i++) {
+            if (result != i && knows(result, i)) {
+                return -1;
+            }
+            if (result != i && !knows(i, result)) {
+                return -1;
+            }
+        }
+        
+        return result;
     }
 }
