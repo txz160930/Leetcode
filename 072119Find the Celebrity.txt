@@ -45,6 +45,26 @@ public class Solution extends Relation {
      */
     public int findCelebrity(int n) {
         // Write your code here
+        int result = 0;
+        
+        //根据排除法找到一个人，如果他认识别人，那么他不是名人，如果他不认识别人，那么别人不是名人
+        for (int i = 1; i < n; i++) {
+            if (knows(result, i)) {
+                result = i;
+            }
+        }
+        
+        //对于这个人验证
+        for (int i = 0; i < n; i++) {
+            if (result != i && knows(result, i)) {
+                return -1;
+            }
+            if (result != i && !knows(i, result)) {
+                return -1;
+            }
+        }
+        
+        return result;
     }
 }
 
