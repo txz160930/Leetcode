@@ -19,7 +19,29 @@ Output: 3
 
 class Solution {
     public int shortestSubarray(int[] A, int K) {
-        
+        int N = A.length;
+        long[] P = new long[N + 1];
+        for (int i = 0; i < N; ++i)
+            P[i + 1] = P[i] + (long) A[i];
+
+        // Want smallest y-x with P[y] - P[x] >= K
+        int ans = N + 1; // N+1 is impossible
+        Deque<Integer> monoq = new LinkedList(); //opt(y) candidates, as indices of P
+
+        for (int y = 0; y < P.length; ++y) {
+            // Want opt(y) = largest x with P[x] <= P[y] - K;
+            // 如果P[x1]P[x2]都进去,那么一定选的是P[x2],而不会选P[x1],所以P[x1]直接弹出去
+            while (!monoq.isEmpty() && P[y] <= P[monoq.getLast()])
+                monoq.removeLast();
+            // 判断和队首元素相减,是不是大于等于K,是的话求一下长度,比较一下
+            // 弹出队首,因为已经是最短的了,后面的P[y]若满足,也是更长的
+            while (!monoq.isEmpty() && P[y] >= P[monoq.getFirst()] + K)
+                ans = Math.min(ans, y - monoq.removeFirst());
+
+            monoq.addLast(y);
+        }
+
+        return ans < N + 1 ? ans : -1;
     }
 }
 
