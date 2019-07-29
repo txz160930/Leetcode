@@ -16,6 +16,7 @@ Output: 2
 Explanation:  uniqued array: [1,2]
 
 //Daniel
+//取代之前array
 public class Solution {
     /*
      * @param nums: An ineger array
@@ -23,6 +24,22 @@ public class Solution {
      */
     public int removeDuplicates(int[] nums) {
         // write your code here
+        if (A.length < 2)
+		return A.length;
+ 
+        int j = 0;
+        int i = 1;
+
+        while (i < A.length) {
+            if (A[i] != A[j]) {
+                j++;
+                A[j] = A[i];
+            }
+
+                    i++;
+        }
+
+        return j + 1;
     }
 }
 
