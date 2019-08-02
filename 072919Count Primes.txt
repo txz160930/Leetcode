@@ -26,12 +26,26 @@ public class Solution {
 
 
 //Joel
+
+//精妙的方法
 public class Solution {
     /**
      * @param n: a integer
      * @return: return a integer
      */
     public int countPrimes(int n) {
-        // write your code here
+        boolean[] temp = new boolean[n];
+		int result = 0;
+		
+		for (int i = 2; i < n; i++) {
+		    if (temp[i] == false) {
+			    result++;
+			}
+			for (int j = 2; j * i < n; j++) {
+			    temp[i * j] = true;
+			}
+		}
+		
+		return result;
     }
 }
