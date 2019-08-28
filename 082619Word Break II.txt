@@ -1,0 +1,76 @@
+582. Word Break II
+中文English
+Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.
+
+Return all such possible sentences.
+
+Example
+Example 1:
+
+Input："lintcode"，["de","ding","co","code","lint"]
+Output：["lint code", "lint co de"]
+Explanation：
+insert a space is "lint code"，insert two spaces is "lint co de".
+Example 2:
+
+Input："a"，[]
+Output：[]
+Explanation：dict is null.
+
+
+//Joel
+public class Solution {
+    /*
+     * @param s: A string
+     * @param wordDict: A set of words.
+     * @return: All possible sentences.
+     */
+    public List<String> wordBreak(String s, Set<String> wordDict) {
+        Map<String, List<String>> memo = new HashMap<>();
+    	return helper(s, wordDict, memo);
+    }
+	
+	private List<String> helper(String s, Set<String> wordDict, Map<String, List<String>> memo) {
+	    if (memo.containsKey(s)) {
+		   return memo.get(s);
+		}
+		
+		List<String> results = new ArrayList<String>();
+		
+		if (s.length() == 0) {
+		   return results;
+		}
+		
+		if (wordDict.contains(s)) {
+		   results.add(s);
+		}
+		
+		for (int i = 1; i < s.length(); i++) {
+		   String word = s.substring(0, i);
+		   if (wordDict.contains(word)) {
+		      String temp = s.substring(i, s.length());
+			  List<String> tempList = helper(temp, wordDict, memo);
+			  
+			  for (int j = 0; j < tempList.size(); j++) {
+			     results.add(word + " " + tempList.get(j));
+			  }
+		   }
+		}
+		
+		memo.put(s, results);
+		return results;
+	}
+}
+
+
+
+public class Solution {
+    /*
+     * @param s: A string
+     * @param wordDict: A set of words.
+     * @return: All possible sentences.
+     */
+    public List<String> wordBreak(String s, Set<String> wordDict) {
+        // write your code here
+    }
+}
