@@ -18,7 +18,7 @@ Output：[]
 Explanation：dict is null.
 
 
-
+//Joel
 public class Solution {
     /*
      * @param s: A string
@@ -26,12 +26,44 @@ public class Solution {
      * @return: All possible sentences.
      */
     public List<String> wordBreak(String s, Set<String> wordDict) {
-        // write your code here
+        Map<String, List<String>> memo = new HashMap<>();
+    	return helper(s, wordDict, memo);
     }
+	
+	private List<String> helper(String s, Set<String> wordDict, Map<String, List<String>> memo) {
+	    if (memo.containsKey(s)) {
+		   return memo.get(s);
+		}
+		
+		List<String> results = new ArrayList<String>();
+		
+		if (s.length() == 0) {
+		   return results;
+		}
+		
+		if (wordDict.contains(s)) {
+		   results.add(s);
+		}
+		
+		for (int i = 1; i < s.length(); i++) {
+		   String word = s.substring(0, i);
+		   if (wordDict.contains(word)) {
+		      String temp = s.substring(i, s.length());
+			  List<String> tempList = helper(temp, wordDict, memo);
+			  
+			  for (int j = 0; j < tempList.size(); j++) {
+			     results.add(word + " " + tempList.get(j));
+			  }
+		   }
+		}
+		
+		memo.put(s, results);
+		return results;
+	}
 }
 
 
-//Joel
+
 public class Solution {
     /*
      * @param s: A string
