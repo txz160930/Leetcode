@@ -1,0 +1,84 @@
+156. Merge Intervals
+中文English
+Given a collection of intervals, merge all overlapping intervals.
+
+Example
+Example 1:
+
+Input: [(1,3)]
+Output: [(1,3)]
+Example 2:
+
+Input:  [(1,3),(2,6),(8,10),(15,18)]
+Output: [(1,6),(8,10),(15,18)]
+Challenge
+O(n log n) time and O(1) extra space.
+
+/**
+ * Definition of Interval:
+ * public classs Interval {
+ *     int start, end;
+ *     Interval(int start, int end) {
+ *         this.start = start;
+ *         this.end = end;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param intervals: interval list.
+     * @return: A new interval list.
+     */
+    public List<Interval> merge(List<Interval> intervals) {
+        // write your code here
+    }
+}
+
+
+
+
+//Joel
+/**
+ * Definition of Interval:
+ * public classs Interval {
+ *     int start, end;
+ *     Interval(int start, int end) {
+ *         this.start = start;
+ *         this.end = end;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param intervals: interval list.
+     * @return: A new interval list.
+     */
+    public List<Interval> merge(List<Interval> intervals) {
+	    if (intervals == null || intervals.size() <= 1) {
+		    return intervals;
+		}
+        Collections.sort(intervals, new Comparator<Interval>() {
+		    public int compare(Interval left, Interval right) {
+			  return left.start - right.start;
+			}
+		});
+		
+		Interval last = intervals.get(0);
+		int lastIndex = 0;
+		for (int i = 1; i < intervals.size(); i++) {
+		   Interval temp = intervals.get(i);
+		   if (temp.start > last.end) {
+		      last = intervals.get(lastIndex + 1);
+			  lastIndex = lastIndex + 1;
+			  last.start = temp.start;
+			  last.end = temp.end;
+		   } else {
+		      last.end = Math.max(temp.end, last.end);
+		   }
+		}
+		
+		return intervals.subList(0, lastIndex + 1);
+    }
+}
