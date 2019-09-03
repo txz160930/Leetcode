@@ -37,13 +37,30 @@ public class Solution {
 }
 
 
+设定两个指针, 初始在两端, 计算这两个组成的容量, 然后移动值较小的那个, 所有计算结果取最大.
 
+可以反证法证明这样可以得到最优答案
 public class Solution {
     /**
      * @param heights: a vector of integers
      * @return: an integer
      */
     public int maxArea(int[] heights) {
-        // write your code here
+        if (heights == null || heights.length < 2) {
+		   return 0;
+		}
+		int max = Integer.MIN_VALUE;
+		int left = 0;
+		int right = heights.length - 1;
+		while (left < right) {
+		   max = Math.max(max, (right - left) * Math.min(heights[left], heights[right]);
+		   if (heights[left] < heights[right]) {
+		      left++;
+		   } else {
+		      right--;
+		   }
+		}
+		
+		return max;
     }
 }
