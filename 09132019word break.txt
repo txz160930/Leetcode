@@ -1,0 +1,69 @@
+107. Word Break
+中文English
+Given a string s and a dictionary of words dict, determine if s can be break into a space-separated sequence of one or more dictionary words.
+
+Example
+Example 1:
+	Input:  "lintcode", ["lint", "code"]
+	Output:  true
+
+Example 2:
+	Input: "a", ["a"]
+	Output:  true
+	
+public class Solution {
+    /*
+     * @param s: A string
+     * @param dict: A dictionary of words dict
+     * @return: A boolean
+     */
+    public boolean wordBreak(String s, Set<String> dict) {
+        // write your code here
+    }
+}
+
+"aaab"
+["a","b"]
+
+//Joel
+//不对得代码
+
+public class Solution {
+    /*
+     * @param s: A string
+     * @param dict: A dictionary of words dict
+     * @return: A boolean
+     */
+    public boolean wordBreak(String s, Set<String> dict) {
+        boolean[] result = new boolean[1];
+		int index = 0;
+		Set<String> set = new HashSet<>();
+		helper(s, dict, index, result, set);
+		return result[0];
+    }
+	
+	private void helper(String s, Set<String> dict, int index, boolean[] result, Set<String> set) {
+	    if (dict.size() == 0 && index == s.length()) {
+		   result[0] = true;
+		   return;
+		}
+		
+		if (index == s.length()) {
+		   return;
+		}
+		
+		for (int i = index + 1; i <= s.length(); i++) {
+		   String preString = s.substring(index, i);
+		   String postString = s.substring(i);
+		   if (set.contains(preString)) {
+		      continue;
+		   }
+		   if (dict.contains(preString)) {
+		      set.add(preString);
+			  dict.remove(preString);
+			  helper(s, dict, i, result, set);
+			  dict.add(preString);
+		   }
+		}
+	}
+}
