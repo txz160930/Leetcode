@@ -22,7 +22,7 @@ public class Solution {
     }
 }
 
-
+[0,0,-1]
 //Joel
 public class Solution {
     /**
@@ -30,6 +30,34 @@ public class Solution {
      * @return: An integer
      */
     public int longestConsecutive(int[] num) {
-        // write your code here
+        if (num == null || num.length == 0) {
+		    return 0;
+		}
+		
+		Set<Integer> set = new HashSet<>();
+		int result = 0;
+		
+		for (int i = 0; i < num.length; i++) {
+		   set.add(num[i]);
+		}
+		
+		for (int i = 0; i < num.length; i++) {
+		   int high = num[i] + 1;
+		   int low = num[i] - 1;
+		   
+		   while (set.contains(high)) {
+			  set.remove(high);
+			  high++;
+		   }
+		   
+		   while (set.contains(low)) {
+			  set.remove(low);
+			  low--;
+		   }
+		   
+		   result = Math.max(result, high - low - 1);
+		}
+		
+		return result;
     }
 }
