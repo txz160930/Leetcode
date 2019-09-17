@@ -41,3 +41,47 @@ public class Solution {
         // write your code here
     }
 }
+
+
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+//利用两个头
+public class Solution {
+    /**
+     * @param head: The first node of linked list.
+     * @param n: An integer
+     * @return: The head of linked list.
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null || n <= 0) {
+		    return null;
+		}
+		
+		ListNode dummy = new ListNode(0);
+		dummy.next = head;
+		
+		ListNode preDelete = dummy;
+		ListNode tail = head;
+		for (int i = 0; i < n; i++) {
+		   if (tail == null) {
+		      return null;
+		   }
+		   tail = tail.next;
+		}
+		while (tail != null) {
+		   tail = tail.next;
+		   preDelete = preDelete.next;
+		}
+		preDelete.next = preDelete.next.next;
+		return dummy.next;
+    }
+}
