@@ -38,6 +38,7 @@ public class Solution {
 
 
 //Joel
+//错误做法
 public class Solution {
     /**
      * @param amount: a total amount of money amount
@@ -45,6 +46,38 @@ public class Solution {
      * @return: the number of combinations that make up the amount
      */
     public int change(int amount, int[] coins) {
+        int[] dp = new int[amount + 1];
+		dp[0] = 1;
+		
+		for (int i = 1; i <= amount; i++) {
+		   for (int j = 0; j < coins.length; j++) {
+		      if (i - coins[j] >= 0) {
+			     dp[i] = dp[i - coins[j]] + dp[i];
+			  }
+		   }
+		}
+		
+		return dp[amount];
+    }
+}
+
+
+public class Solution {
+    /**
+    * @param amount: a total amount of money amount
+     * @param coins: the denomination of each coin
+     * @return: the number of combinations that make up the amount
+     */
+    public int change(int amount, int[] coins) {
         // write your code here
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+		//对每个硬币扫可以不重复
+        for (int i = 0; i < coins.length; i++) {
+            for (int j = coins[i]; j <= amount; j++) {
+                dp[j] += dp[j - coins[i]];
+            }
+        }
+        return dp[amount];
     }
 }
