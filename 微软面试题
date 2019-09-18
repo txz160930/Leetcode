@@ -1,0 +1,38 @@
+一个string , 给n, 每n 个reverse 一下string. 空格要重新开始。
+n = 'abcd sef df'
+k = 3
+output = 'cbad fes df'
+
+
+pubilc String reverseString(String input， int k) {
+   if (input == null || input.length() = 0) {
+       return input;
+   }
+   
+   int count = 0; 
+   char[] characters = input.toCharArray();
+   
+   for (int i = 0; i < input.length(); i++) {
+      if (input.charAt(i) == ' ') {
+	     count = 0;
+		 continue;
+	  }
+	  count++;
+	  if (count == k) {
+	     reverse(characters, i, i - k + 1);
+	     count = 0;
+	  }
+   }
+   
+   return characters.toString();
+}
+
+private void reverse(char[] characters, int end, int start) {
+    while (start < end) {
+	   char temp = characters[end];
+       characters[end] = characters[start];
+       characters[start] = temp;
+       end--;
+       start++;	   
+	}
+}
