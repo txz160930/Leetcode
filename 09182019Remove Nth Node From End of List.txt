@@ -1,0 +1,87 @@
+174. Remove Nth Node From End of List
+中文English
+Given a linked list, remove the nth node from the end of list and return its head.
+
+Example
+Example 1:
+	Input: list = 1->2->3->4->5->null， n = 2
+	Output: 1->2->3->5->null
+
+
+Example 2:
+	Input:  list = 5->4->3->2->1->null, n = 2
+	Output: 5->4->3->1->null
+
+Challenge
+Can you do it without getting the length of the linked list?
+
+Notice
+The minimum number of nodes in list is n.
+
+
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param head: The first node of linked list.
+     * @param n: An integer
+     * @return: The head of linked list.
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        // write your code here
+    }
+}
+
+
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+//利用两个头
+public class Solution {
+    /**
+     * @param head: The first node of linked list.
+     * @param n: An integer
+     * @return: The head of linked list.
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null || n <= 0) {
+		    return null;
+		}
+		
+		ListNode dummy = new ListNode(0);
+		dummy.next = head;
+		
+		ListNode preDelete = dummy;
+		ListNode tail = head;
+		for (int i = 0; i < n; i++) {
+		   if (tail == null) {
+		      return null;
+		   }
+		   tail = tail.next;
+		}
+		while (tail != null) {
+		   tail = tail.next;
+		   preDelete = preDelete.next;
+		}
+		preDelete.next = preDelete.next.next;
+		return dummy.next;
+    }
+}
