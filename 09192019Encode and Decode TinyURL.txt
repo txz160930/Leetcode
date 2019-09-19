@@ -1,0 +1,54 @@
+1186. Encode and Decode TinyURL
+中文English
+TinyURL is a URL shortening service where you enter a URL such as https://lintcode.com/problems/design-tinyurl and it returns a short URL such as http://tinyurl.com/4e9iAk.
+
+Design the encode and decode methods for the TinyURL service. There is no restriction on how your encode/decode algorithm should work. You just need to ensure that a URL can be encoded to a tiny URL and the tiny URL can be decoded to the original URL.
+
+Example
+Example 1:
+
+Input："https://lintcode.com/problems/design-tinyurl"
+Output：http://tinyurl.com/4e9iAk
+Explanation：encode and decode by your own algorithm.
+Example 2:
+
+Input："https://lintcode.com/problems/solution"
+Output：http://tinyurl.com/5d7fiu
+Explanation：encode and decode by your own algorithm.
+
+
+public class Solution {
+    public String encode(String longUrl) {
+        // Encodes a URL to a shortened URL.
+    }
+
+    
+    public String decode(String shortUrl) {
+        // Decodes a shortened URL to its original URL.
+    }
+}
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.decode(codec.encode(url));
+
+
+
+public class Solution {
+    private List<String> list = new ArrayList<>();
+	private int count = 0;
+    public String encode(String longUrl) {
+        list.add(longUrl);
+		return String.valueOf(count++);
+		//输出计数器的数字
+    }
+
+    //输入计数器的数字
+    public String decode(String shortUrl) {
+        int i = Integer.valueOf(shortUrl);
+		//返回计数器所映射的值
+		return list.get(i);
+    }
+}
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.decode(codec.encode(url));
