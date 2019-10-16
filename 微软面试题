@@ -4,8 +4,13 @@ k = 3
 output = 'cbad fes df'
 
 
-pubilc String reverseString(String input， int k) {
-   if (input == null || input.length() = 0) {
+class Main {
+  public static void main(String[] args) {
+    System.out.println(reverseString("abcd sef df", 3));
+  }
+
+  public static String reverseString(String input, int k) {
+   if (input == null || input.length() == 0) {
        return input;
    }
    
@@ -24,15 +29,16 @@ pubilc String reverseString(String input， int k) {
 	  }
    }
    
-   return characters.toString();
+   return String.valueOf(characters);
 }
 
-private void reverse(char[] characters, int end, int start) {
-    while (start < end) {
-	   char temp = characters[end];
-       characters[end] = characters[start];
-       characters[start] = temp;
-       end--;
-       start++;	   
-	}
+  private static void reverse(char[] characters, int end, int start) {
+      while (start < end) {
+      char temp = characters[end];
+        characters[end] = characters[start];
+        characters[start] = temp;
+        end--;
+        start++;	   
+    }
+  }
 }
