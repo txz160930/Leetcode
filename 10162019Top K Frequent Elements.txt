@@ -16,6 +16,15 @@ You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
 Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
 
 //Joel
+class Pair {
+    int value;
+	int frequency;
+	public Pair (int value, int frequency) {
+	   this.value = value;
+	   this.frequency = frequency;
+	}
+}
+
 public class Solution {
     /**
      * @param nums: the given array
@@ -23,6 +32,33 @@ public class Solution {
      * @return: the k most frequent elements
      */
     public List<Integer> topKFrequent(int[] nums, int k) {
-        // Write your code here
+        Map<Integer, Integer> map = new HashMap<>();
+		List<Integer> list = new ArrayList<>();
+		
+		PriorityQueue<Pair> queue = new PriorityQueue<>(
+		   new Comparator<Pair>() {
+		      public int compare (Pair left, Pair right) {
+			     return right.frequency - left.frequency;
+			  }
+		   }
+		);
+		
+		for (int i = 0; i < nums.length; i++) {
+		   if (map.containsKey(nums[i])) {
+		       map.put(nums[i], map.get(nums[i]) + 1);
+		   } else {
+		       map.put(nums[i], 1);
+		   }
+		}
+		
+		for (int key : map.keySet()) {
+		   queue.add(new Pair(key, map.get(key)));
+		}
+		
+		for (int i = 0; i < k; i++) {
+		   list.add(queue.poll().value);
+		}
+		
+		return list;
     }
 }
