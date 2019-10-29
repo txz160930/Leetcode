@@ -1,0 +1,27 @@
+Watering Flowers (old version)
+Input: plants = [2, 4, 5, 1, 2], capacity = 6
+Output: 17
+Explanation:
+First you water plants[0] and plants[1] (2 steps).
+Then you have to go back to refill (2 steps) and water plants[2] and plants[3] (4 steps).
+Then again you have to refill (4 steps) and water plants[4] (5 steps).
+So 2 + 2 + 4 + 4 + 5 = 17.
+
+class Solution {
+	 public int calculateSteps (int[] plants, int capacity) {
+	     int remain = capacity;
+		 int result = 0;
+	     for (int i = 0; i < plants.length; i++) {
+		     if (remain >= plants[i]) {
+			    remain -= plants[i];
+				result++;
+			 }
+			 else if (remain < plants[i]) {
+			    remain = capacity - plants[i];
+			    result += 2i + 1;
+			 }
+		 }
+		 
+		 return result;
+	 }
+}
