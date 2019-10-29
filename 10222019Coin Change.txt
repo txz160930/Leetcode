@@ -61,6 +61,7 @@ public class Solution {
 	}
 }
 
+dp[i][j]=max(dp[i−1][j],dp[i−1][j−k∗coin[i]]+k)(0≤k∗coin[i]≤j)
 
 public class Solution {
     public int coinChange(int[] A, int M) {
@@ -71,8 +72,16 @@ public class Solution {
 	   for (int i = 1; i <= M; i++) {
 	      f[i] = -1;
 		  for (int j = 0; j < n; j++) {
-		  
+		     if (i >= A[j] && f[i - A[j]] != -1) {
+			    if (f[i] == -1) {
+				   f[i] = f[i - A[j]] + 1;
+				} else {
+				   f[i] = Math.min(f[i - A[j]] + 1, f[i]);
+				}
+			 }
 		  }
 	   }
+	   
+	   return f[M];
 	}
 }
