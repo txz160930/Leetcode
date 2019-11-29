@@ -1,0 +1,87 @@
+669. Coin Change
+中文English
+You are given coins of different denominations and a total amount of money amount. Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+
+Example
+Example1
+
+Input: 
+[1, 2, 5]
+11
+Output: 3
+Explanation: 11 = 5 + 5 + 1
+Example2
+
+Input: 
+[2]
+3
+Output: -1
+Notice
+You may assume that you have an infinite number of each kind of coin.
+
+//我的方法 stack overflow
+public class Solution {
+    /**
+     * @param coins: a list of integer
+     * @param amount: a total amount of money amount
+     * @return: the fewest number of coins that you need to make up
+     */
+    public int coinChange(int[] coins, int amount) {
+        if (coins == null || amount == 0) {
+		   return 0;
+		}
+		
+		int[] min = new int[1];
+		min[0] = Integer.MAX_VALUE;
+		Arrays.sort(coins);
+		dfs(coins, amount, coins.length - 1, 0, min, 0);
+		return min[0] == Integer.MAX_VALUE ? -1 : min[0];
+    }
+	
+	private void dfs(int[] coins, int amount, int index, int count, int[] min, int total) {
+		if (min[0] != Integer.MAX_VALUE) {
+		    return;
+		}
+		
+	    if (total == amount) {
+			min[0] = count;
+		    return;
+		}
+
+		if (total > amount) {
+		    return;
+		}
+		
+		for (int i = coins.length - 1; i >= 0; i--) {
+		    total = total + coins[i];
+			dfs(coins, amount, index - 1, count + 1, min, total);
+			total = total - coins[i];
+		}
+	
+	}
+}
+
+dp[i][j]=max(dp[i−1][j],dp[i−1][j−k∗coin[i]]+k)(0≤k∗coin[i]≤j)
+
+public class Solution {
+    public int coinChange(int[] A, int M) {
+	   int[] f = new int[M + 1];
+	   int n = A.length;
+	   
+	   f[0] = 0;
+	   for (int i = 1; i <= M; i++) {
+	      f[i] = -1;
+		  for (int j = 0; j < n; j++) {
+		     if (i >= A[j] && f[i - A[j]] != -1) {
+			    if (f[i] == -1) {
+				   f[i] = f[i - A[j]] + 1;
+				} else {
+				   f[i] = Math.min(f[i - A[j]] + 1, f[i]);
+				}
+			 }
+		  }
+	   }
+	   
+	   return f[M];
+	}
+}
