@@ -33,7 +33,7 @@ Do it in O(nlogk) time and O(n) extra space.
 Notice
 You should order the words by the frequency of them in the return list, the most frequent one comes first. If two words has the same frequency, the one with lower alphabetical order come first.
 
-
+//Daniel
 public class Solution {
     /**
      * @param words: an array of string
@@ -42,6 +42,38 @@ public class Solution {
      */
     public String[] topKFrequentWords(String[] words, int k) {
         // write your code here
+	HashMap<String, Integer> map = new HashMap<>();
+        for(int i = 0; i < words.length; i++){
+            if(map.containsKey(words[i])){
+                map.put(words[i], map.get(words[i])+1);
+            }else{
+                 map.put(words[i], map.getOrDefault(words[i], 0));
+            }    
+        }
+        TreeMap<Integer, List<String>> freqMap = new TreeMap<>();
+        for(String num : map.keySet()){
+            int freq = map.get(num);
+            if(!freqMap.containsKey(freq)){
+                freqMap.put(freq, new LinkedList<>());
+            }
+            freqMap.get(freq).add(num);
+        }
+        
+        List<String> res = new ArrayList<>();
+        while (res.size() < k) {
+            if(freqMap.size()==0){
+                 break;
+             }
+             int count = freqMap.lastKey();
+             List<String> list = freqMap.get(count);
+             freqMap.remove(count);
+             Collections.sort(list);
+             res.addAll(list);
+        }
+        while(res.size()>k){
+             res.remove(res.size()-1);
+         }
+        return res;
     }
 }
 
