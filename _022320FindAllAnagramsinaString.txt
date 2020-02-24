@@ -1,0 +1,89 @@
+438. Find All Anagrams in a String
+Medium
+
+2201
+
+158
+
+Add to List
+
+Share
+Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
+
+Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100.
+
+The order of output does not matter.
+
+Example 1:
+
+Input:
+s: "cbaebabacd" p: "abc"
+
+Output:
+[0, 6]
+
+Explanation:
+The substring with start index = 0 is "cba", which is an anagram of "abc".
+The substring with start index = 6 is "bac", which is an anagram of "abc".
+Example 2:
+
+Input:
+s: "abab" p: "ab"
+
+Output:
+[0, 1, 2]
+
+Explanation:
+The substring with start index = 0 is "ab", which is an anagram of "ab".
+The substring with start index = 1 is "ba", which is an anagram of "ab".
+The substring with start index = 2 is "ab", which is an anagram of "ab".
+
+
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> list = new ArrayList<>();
+        if (s.length() < p.length()) {
+            return list;
+        }
+        
+        int[] sumS = new int[26];
+        int[] sumP = new int[26];
+        int matchTotal = 0;
+        
+        for (int i = 0; i < p.length(); i++) {
+            sumP[p.charAt(i) - 'a'] += 1;
+        }
+        for (int i = 0; i < p.length(); i++) {
+            sumS[s.charAt(i) - 'a'] += 1;
+            if (sumS[s.charAt(i) - 'a'] <= sumP[s.charAt(i) - 'a']) {
+                matchTotal += 1;
+            }
+        }
+        if (matchTotal == p.length()) {
+            list.add(0);
+        }
+        
+        for (int start = 0; start < s.length() - p.length(); start++) {
+            int endIndex = start + p.length();
+            //先缩
+            if (sumP[s.charAt(start) - 'a'] != 0) {
+                if (sumS[s.charAt(start) - 'a'] <= sumP[s.charAt(start) - 'a']) {
+                    matchTotal -= 1;
+                }
+            }
+            sumS[s.charAt(start) - 'a'] -= 1;
+            
+            //后伸
+            if (sumS[s.charAt(endIndex) - 'a'] < sumP[s.charAt(endIndex) - 'a']) {
+                matchTotal += 1;
+            }
+            sumS[s.charAt(endIndex) - 'a'] += 1;
+            
+            if (matchTotal == p.length()) {
+                list.add(start + 1);
+            }
+        }
+        
+        return list;
+    }
+}
